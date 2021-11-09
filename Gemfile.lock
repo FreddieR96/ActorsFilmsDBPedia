@@ -82,7 +82,7 @@ GEM
     net-http-persistent (3.1.0)
       connection_pool (~> 2.2)
     nio4r (2.5.8)
-    nokogiri (1.10.10-x64-mingw32)
+    nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     puma (3.12.6)
     rack (2.2.3)
@@ -155,7 +155,6 @@ GEM
     websocket-extensions (0.1.5)
 
 PLATFORMS
-  x64-mingw32
 
 DEPENDENCIES
   bootsnap (>= 1.1.0)
