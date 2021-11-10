@@ -12,10 +12,8 @@ module GetsFilmData
     }
     ")
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
-    result = sparql.select.where([:s, :p, :o]).offset(100).limit(10)
-    result.each_solution do |solution|
-      puts solution.inspect
-    end
+    result = sparql.query(query)
+    puts result
   end
 
   def get_actors_from_film(film)
