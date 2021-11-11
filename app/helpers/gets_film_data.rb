@@ -13,7 +13,7 @@ module GetsFilmData
     "
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     result = sparql.query(query)
-    result.each {|solution| puts solution.to_h}
+    result.each {|solution| puts solution[:name].to_s}
   end
 
   def get_actors_from_film(film)
