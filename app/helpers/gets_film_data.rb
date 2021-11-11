@@ -1,6 +1,6 @@
 module GetsFilmData
   def get_films_from_actor(actor)
-    query = SPARQL.parse("
+    query = "
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
     PREFIX dbp: <http://dbpedia.org/property/>
@@ -10,7 +10,7 @@ module GetsFilmData
     ?film dbo:starring dbr:#{actor}  .
     ?film dbp:name ?name
     }
-    ")
+    "
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     result = sparql.query(query)
     puts result
