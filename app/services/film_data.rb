@@ -33,9 +33,9 @@ class FilmData
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbp: <http://dbpedia.org/property/>
     SELECT ?starring where {
-    ?film dbo:director ?director
-    ?film dbo:gross ?gross
-    ?film dbo:starring ?starring
+    ?film dbo:director ?director  .
+    ?film dbo:gross ?gross  .
+    ?film dbo:starring ?starring  .
     ?film dbp:name '#{film}'@en
     }
     "
