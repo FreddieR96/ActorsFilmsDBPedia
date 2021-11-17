@@ -1,14 +1,15 @@
 class MainController < ApplicationController
-  include GetsFilmData
   def home
+    results = 
     if params.has_key? :actor
-      get_films_from_actor(params[:actor])
+      Rails.cache.fetch("actor-#{params[:actor]}") do
+        FilmData.get_film_data(actor: params[:actor])
+      end
     elsif params.has_key? :film
-      get_actors_from_film(params[:film])
+      Rails.cache.fetch("film-#{params[:film]}") do
+        FilmData.get_film_data(film: params[:film])
+      end
     end
-    first = Rails.cache.fetch('hi') do
-      'there'
-    end
-    render json: {first: first}
+    render json: results
   end
 end

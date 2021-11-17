@@ -1,5 +1,15 @@
-module GetsFilmData
-  def get_films_from_actor(actor)
+class FilmData
+  def self.get_film_data(actor:nil, film:nil)
+    if actor
+      get_films_from_actor(actor)
+    elsif film
+      get_actors_from_film(film)
+    end
+  end
+
+  private
+
+  def self.get_films_from_actor(actor)
     query = "
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
@@ -13,10 +23,12 @@ module GetsFilmData
     "
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     result = sparql.query(query)
-    result.each {|solution| puts solution[:name].to_s}
+    films = []
+    result.each {|solution| films << solution[:name].to_s if !films.last == solution[:name].to_s}
+    {films: films}
   end
-
-  def get_actors_from_film(film)
+    
+  def self.get_actors_from_film(film)
     query = "
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbp: <http://dbpedia.org/property/>
@@ -29,6 +41,8 @@ module GetsFilmData
     "
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     result = sparql.query(query)
-    puts result
+    actors = []
+    result.each {|solution| actors << solution[:name].to_s if !actors.last == solution[:name].to_s}
+    {actors: actors}
   end
 end
