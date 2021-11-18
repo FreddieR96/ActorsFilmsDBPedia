@@ -42,7 +42,7 @@ class FilmData
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     result = sparql.query(query)
     actors = []
-    result.each {|solution| puts solution[:starring][:name].to_s}
+    result.each {|solution| puts solution.to_s}
     {actors: actors}
   end
 end
