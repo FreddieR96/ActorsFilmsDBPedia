@@ -23,7 +23,12 @@ class FilmData
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     result = sparql.query(query)
     films = []
-    result.each {|solution| puts solution.to_h }
+    result.each do |solution|
+      filmUri = solution[:film]
+      filmString = /(?<=resource\/).+/.match(filmUri)
+      filmString = filmString.gsub(/_/, " ")
+      films << filmString if !(filmString == films.last)
+    end
     {films: films}
   end
     
@@ -45,7 +50,7 @@ class FilmData
       actorUri = solution[:starring]
       actorString = /(?<=resource\/).+/.match(actorUri)[0]
       actorString = actorString.gsub(/_/, " ")
-      actors << actorString
+      actors << actorString if !(actorString == actors.last)
     end
     {actors: actors}
   end
