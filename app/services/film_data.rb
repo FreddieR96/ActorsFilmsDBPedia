@@ -14,17 +14,16 @@ class FilmData
     PREFIX dbo: <http://dbpedia.org/ontology/>
     PREFIX dbr: <http://dbpedia.org/resource/>
     PREFIX dbp: <http://dbpedia.org/property/>
-    SELECT ?name where {
+    SELECT ?film where {
     ?film dbo:director ?director  .
     ?film dbo:gross ?gross  .
     ?film dbo:starring dbr:#{actor}  .
-    ?film dbp:name ?name
     }
     "
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     result = sparql.query(query)
     films = []
-    result.each {|solution| films << solution[:name].to_s if !(films.last == solution[:name].to_s)}
+    result.each {|solution| puts solution.to_h }
     {films: films}
   end
     
