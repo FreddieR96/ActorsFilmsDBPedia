@@ -25,7 +25,7 @@ class FilmData
     films = []
     result.each do |solution|
       filmUri = solution[:film]
-      filmString = /(?<=resource\/).+/.match(filmUri)
+      filmString = /(?<=resource\/).+/.match(filmUri)[0]
       filmString = filmString.gsub(/_/, " ")
       films << filmString if !(filmString == films.last)
     end
