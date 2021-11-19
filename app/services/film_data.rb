@@ -42,7 +42,12 @@ class FilmData
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     result = sparql.query(query)
     actors = []
-    result.each {|solution| puts solution[:starring]}
+    result.each do |solution| 
+      actorUri = solution[:starring]
+      actorString = /(?<=resource\/).+/.match(actorUri)[0]
+      actorString = actorString.gsub(/_/, " ")
+      actors << actorString
+    end
     {actors: actors}
   end
 end
