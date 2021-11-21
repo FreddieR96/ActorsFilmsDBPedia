@@ -21,7 +21,7 @@ class FilmData
       ?film dbo:starring dbr:#{actor}  .
       }
       "
-    rescue SPARQL::Client::MalformedQuery
+    rescue
       return {error: 'Please format the actor dbpedia resource correctly'}
     else
       sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
