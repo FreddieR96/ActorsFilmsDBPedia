@@ -21,9 +21,6 @@ class FilmData
       ?film dbo:starring dbr:#{actor}  .
       }
       "
-    rescue
-      return {error: 'Please format the actor dbpedia resource correctly'}
-    else
       sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
       result = sparql.query(query)
       films = []
@@ -34,6 +31,8 @@ class FilmData
         films << filmString if !(filmString == films.last)
       end
       {films: films}
+    rescue
+      return {error: 'Please format the actor dbpedia resource correctly'}
     end
   end
     
