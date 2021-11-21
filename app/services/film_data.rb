@@ -10,26 +10,31 @@ class FilmData
   private
 
   def self.get_films_from_actor(actor)
-    query = "
-    PREFIX dbo: <http://dbpedia.org/ontology/>
-    PREFIX dbr: <http://dbpedia.org/resource/>
-    PREFIX dbp: <http://dbpedia.org/property/>
-    SELECT ?film where {
-    ?film dbo:director ?director  .
-    ?film dbo:gross ?gross  .
-    ?film dbo:starring dbr:#{actor}  .
-    }
-    "
-    sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
-    result = sparql.query(query)
-    films = []
-    result.each do |solution|
-      filmUri = solution[:film]
-      filmString = /(?<=resource\/).+/.match(filmUri)[0]
-      filmString = filmString.gsub(/_/, " ")
-      films << filmString if !(filmString == films.last)
+    begin
+      query = "
+      PREFIX dbo: <http://dbpedia.org/ontology/>
+      PREFIX dbr: <http://dbpedia.org/resource/>
+      PREFIX dbp: <http://dbpedia.org/property/>
+      SELECT ?film where {
+      ?film dbo:director ?director  .
+      ?film dbo:gross ?gross  .
+      ?film dbo:starring dbr:#{actor}  .
+      }
+      "
+    rescue SPARQL::Client::MalformedQuery
+      return {error: 'Please format the actor dbpedia resource correctly'}
+    else
+      sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
+      result = sparql.query(query)
+      films = []
+      result.each do |solution|
+        filmUri = solution[:film]
+        filmString = /(?<=resource\/).+/.match(filmUri)[0]
+        filmString = filmString.gsub(/_/, " ")
+        films << filmString if !(filmString == films.last)
+      end
+      {films: films}
     end
-    {films: films}
   end
     
   def self.get_actors_from_film(film)
