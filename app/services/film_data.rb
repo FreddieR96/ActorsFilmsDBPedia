@@ -31,7 +31,8 @@ class FilmData
         films << filmString if !(filmString == films.last)
       end
       {films: films}
-    rescue
+    rescue Exception => e
+      puts e.inspect
       return {error: 'Please format the actor dbpedia resource correctly'}
     end
   end
