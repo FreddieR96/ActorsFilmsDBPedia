@@ -2,7 +2,7 @@
 
 Ruby version 3.0.2
 
-bundle install
+bundle install/ bundle update
 
 rails s
 
