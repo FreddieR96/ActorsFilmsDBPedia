@@ -1,5 +1,3 @@
-# Query Actors and Films with DBPedia
-
 Ruby version 3.0.2
 
 bundle install/ bundle update
